@@ -1,8 +1,16 @@
 #include <iostream>
 #include "lexer.cpp"
 
+using namespace std;
+
 int main() {
-    Lexer lexer = Lexer();
-    std::cout << "Hello, Wish Script" << std::endl;
+    cout << "Hello, Wish Script" << endl;
+    string input;
+    cin >> input;
+    Lexer lexer = Lexer(input);
+    lexer.tokenize();
+    for(auto & token : lexer.tokens){
+        cout << token.value << " " << token.type << '\n';
+    }
     return 0;
 }

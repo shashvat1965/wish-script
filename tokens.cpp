@@ -22,3 +22,8 @@ class Float : public Token {
 public:
     explicit Float(const string& value) : Token("FLOAT", value) {}
 };
+
+class Operation : public Token {
+public:
+    explicit Operation(const string& value) : Token("OP", value) {}
+};
