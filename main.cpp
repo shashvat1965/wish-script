@@ -6,7 +6,7 @@ using namespace std;
 int main() {
     cout << "Hello, Wish Script" << endl;
     string input;
-    cin >> input;
+    getline(cin, input);
     Lexer lexer = Lexer(input);
     lexer.tokenize();
     for(auto & token : lexer.tokens){

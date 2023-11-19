@@ -8,45 +8,43 @@ using namespace std;
 class Lexer {
     inline const static string digits = "1234567890";
     inline const static string letters = "abcdefghijklmnopqrstuvwxyz";
-    inline const static string operations = "+-/*";
+    inline const static string operations = "+-/*=";
     inline const static string stopword = " ";
+    inline const static string keywords[2] = {"please","what"};
 
 public:
     string text;
     int index = 0;
     vector<Token> tokens;
-    Token *selectedToken = nullptr;
     string character = string(1,text[index]);
 
     explicit Lexer(const string &enteredText) {
         text = enteredText;
         index = 0;
-        character = string(1,text[index]);;
+        character = string(1,text[index]);
     };
 
     void move() {
         index++;
         if (index < text.length()) {
             character = string(1,text[index]);
-        } else {
-
         }
     }
 
     vector<Token> tokenize() {
         while (index < text.length()) {
-
             // lambda function to check if the character belongs to any string set
              auto isSubstring = [&](const string& stringSet) {
                 return stringSet.find(character) != string::npos;
             };
-
             if (isSubstring(stopword)) {
                 move();
-                continue;
             }
             if (isSubstring(digits)) {
                 extractNumber();
+            }
+            if (isSubstring(letters)) {
+                extractWord();
             }
             if (isSubstring(operations)) {
                 extractOperation();
@@ -67,7 +65,31 @@ public:
             number += character;
             move();
         }
+
         tokens.push_back(Integer(number));
+
+    }
+
+    void extractWord(){
+
+        // lambda function to check if the character belongs to any string set
+        auto isSubstring = [&](const string& stringSet) {
+            return stringSet.find(character) != string::npos;
+        };
+
+        string keyword;
+        while(isSubstring(letters) && (index < text.length())){
+            keyword += character;
+            move();
+        }
+
+         //code to check if keyword belongs in keywords
+        for (const auto &keyword1 : keywords) {
+            if (keyword == keyword1) {
+                tokens.push_back(Keyword(keyword));
+                return;
+            }
+        }
 
     }
 

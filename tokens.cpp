@@ -27,3 +27,8 @@ class Operation : public Token {
 public:
     explicit Operation(const string& value) : Token("OP", value) {}
 };
+
+class Keyword: public Token {
+public:
+    explicit Keyword(const string& value) : Token("KEY", value) {}
+};
